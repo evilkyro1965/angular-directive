@@ -20,7 +20,7 @@
                 val : "=val"
             },
             template: 
-                '<input type="text" value="{{val}}"></input><h6>{{val}}</h6>',
+                '<input type="text" ng-model="val"></input><h6>{{val}}</h6>',
             link: function link(scope, element, attrs) {
                 
                 if(attrs.mode=='view') {
@@ -39,9 +39,6 @@
                 element.find("input").on('blur', function(event) {
                     element.find("input").css("display","none");
                     element.find("h6").css("display","block");
-                    scope.$apply(function () {
-                        scope.val = element.find("input").val();
-                    });
                 });
 
             }
