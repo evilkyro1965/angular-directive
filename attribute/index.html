@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+<title>Compile</title>
+<script type="text/javascript" src="angular.min.js"></script>
+</head>
+
+<body>
+	<div ng-controller="MyController" >
+	    <tab title="Tab1" content="Lorem ipsum dolor sit amet"></tab>
+	</div>
+
+<script>
+    myapp = angular.module("myapp", []);
+    myapp.directive('tab', function() {
+        return {
+            restrict:'E',
+            scope:{
+                /* NOTE: Normally I would set my attributes and bindings
+                to be the same name but I wanted to delineate between
+                parent and isolated scope. */                
+                title:'@title',
+                content: '@content'
+            },
+            template: '<h3>{{title}}</h3><p>{{content}}</p>'
+        };
+    })
+    myapp.controller("MyController", function($scope, $http) {
+        
+    });
+</script>    
+
+</body>
+
+</html>

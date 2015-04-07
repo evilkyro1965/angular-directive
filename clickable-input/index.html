@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+<title>Compile</title>
+<script type="text/javascript" src="jquery-2.1.3.js"></script>
+<script type="text/javascript" src="angular.min.js"></script>
+</head>
+
+<body>
+	<div ng-controller="MyController" >
+	    <clickable-input name="test" val="name" mode="view"></clickable-input>
+	</div>
+
+<script>
+    myapp = angular.module("myapp", []);
+    myapp.directive('clickableInput', function() {
+        return {
+            restrict:'E',
+            scope:{
+                val : "=val"
+            },
+            template: 
+                '<input type="text" value="{{val}}"></input><h6>{{val}}</h6>',
+            link: function link(scope, element, attrs) {
+                
+                if(attrs.mode=='view') {
+                    element.find("input").css("display","none");
+                }
+                else if(attrs.mode=='edit') {
+                    element.find("h6").css("display","none");
+                }
+
+                element.find("h6").on('click', function(event) {
+                    element.find("input").css("display","block");
+                    element.find("input").focus();
+                    element.find("h6").css("display","none");
+                });
+                
+                element.find("input").on('blur', function(event) {
+                    element.find("input").css("display","none");
+                    element.find("h6").css("display","block");
+                    scope.$apply(function () {
+                        scope.val = element.find("input").val();
+                    });
+                });
+
+            }
+        };
+    })
+    myapp.controller("MyController", function($scope, $http) {
+        $scope.name = "fahrur";
+    });
+</script>    
+
+</body>
+
+</html>

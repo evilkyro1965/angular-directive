@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+<title>Compile</title>
+<script type="text/javascript" src="angular.min.js"></script>
+</head>
+
+<body>
+	<div ng-controller="MyController" >
+	    <tab border-color="red">test</tab>
+	</div>
+
+<script>
+    myapp = angular.module("myapp", []);
+    myapp.directive('tab', function() {
+        return {
+            restrict:'E',
+            scope:{
+                
+            },
+            link: function link(scope, element, attrs) {
+                element.css("border","thin red solid");
+            }
+        };
+    })
+    myapp.controller("MyController", function($scope, $http) {
+
+    });
+</script>    
+
+</body>
+
+</html>
