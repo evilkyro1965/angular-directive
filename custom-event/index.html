@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+<title>Compile</title>
+<script type="text/javascript" src="jquery-2.1.3.js"></script>
+<script type="text/javascript" src="angular.min.js"></script>
+</head>
+
+<body>
+	<div ng-controller="MyController" >
+	    <h3 tap="message = 'Tapped!'">{{message}}</h3>
+	</div>
+
+<script>
+    myapp = angular.module("myapp", []);
+    myapp.directive('tap', function() {
+        return function(scope,elem,attrs){
+            elem.on("touchstart touchend",function () {
+                scope.$apply(attrs["tap"]);
+            });
+        };
+    })
+    myapp.controller("MyController", function($scope, $http) {
+        $scope.message = "Tap me!";
+    });
+</script>    
+
+</body>
+
+</html>
