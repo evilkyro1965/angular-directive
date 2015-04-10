@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+<title>Compile</title>
+<script type="text/javascript" src="angular.min.js"></script>
+</head>
+
+<body>
+	<div ng-controller="MyController" >
+	    <tab data="userlist"></tab>
+	</div>
+
+<script>
+    myapp = angular.module("myapp", []);
+    myapp.directive('tab', function() {
+        return {
+            template : '<div class="menu"><li ng-repeat="row in data">Test</li></div>',
+            scope:{
+                data : '=data'
+            },
+            link: {
+                //  pre: function preLink(scope, iElement, iAttrs, controller) { ... },
+                //  post: function postLink(scope, iElement, iAttrs, controller) { ... }
+                pre: function link(scope, element, attrs) {
+                    element.find('li').html('test');
+                    element.find('li').css("border","thin red solid");
+                },
+                post: function link(scope, element, attrs) {
+                    element.find('li').html('test');
+                    element.find('li').css("border","thin red solid");
+                }
+            }
+        }
+    })
+    myapp.controller("MyController", function($scope, $http) {
+        $scope.userlist = [
+            {'id':'1','name':'fahrur'},
+            {'id':'2','name':'razi'}
+        ];
+    });
+</script>    
+
+</body>
+
+</html>
