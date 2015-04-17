@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html ng-app="transcludeExample">
+<head>
+    <title>Directive Transclude</title>
+    <script src="angular.min.js"></script>
+    <link href="bootstrap.css" rel="stylesheet" />
+    <link href="bootstrap-theme.css" rel="stylesheet" />
+<script>
+  angular.module('transcludeExample', [])
+  .directive('panel', function(){
+      return {
+        restrict: 'E',
+        transclude: true,
+        scope: {},
+        template: '<div class="panel panel-default" ng-transclude></div>'
+      };
+  })
+	.directive('panelTitle', function(){
+      return {
+        restrict: 'E',
+        transclude: true,
+        scope: {title:'@title'},
+        template: '<div class="panel-heading">{{title}}</div>',
+				controller: function() {
+					console.log('controller');
+				},
+				compile: function(tElement, tAttrs, transclude){
+		
+					// compile code here...
+					console.log('compile');
+					var hello = "hello";
+					tElement.append('compile');
+
+					return {
+
+						pre: function() {
+							console.log('pre');
+							
+						},
+				
+						post: function() {
+							console.log('post');
+							console.log(hello);
+						}
+					};
+				}
+      };
+  })
+  .controller('ExampleController', ['$scope', function($scope) {
+		
+  }]);		
+</script>
+
+</head>
+<body>
+    <div ng-controller="ExampleController">
+			<panel>
+				<panel-title title="lorem ipsum"></panel-title>
+			</panel>
+		</div>
+</body>
+</html>
